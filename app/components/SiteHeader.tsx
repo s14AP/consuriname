@@ -8,9 +8,9 @@ import styles from "./SiteHeader.module.css";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/diensten", label: "Diensten" },
-  { href: "/faq", label: "FAQ" },
   { href: "/nieuws", label: "Nieuws" },
   { href: "/over-ons", label: "Over ons" },
+  { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -27,7 +27,11 @@ export default function SiteHeader() {
     <header className={styles.header}>
       <div className="flagBar" />
       <div className={`container ${styles.bar}`}>
-        <Link href="/" className={styles.brand} onClick={() => setMenuOpen(false)}>
+        <Link
+          href="/"
+          className={styles.brand}
+          onClick={() => setMenuOpen(false)}
+        >
           <span className={styles.crest} aria-hidden="true">
             <span className={styles.crestStar}>★</span>
           </span>

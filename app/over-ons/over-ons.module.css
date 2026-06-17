@@ -165,24 +165,24 @@
   align-items: center;
   justify-content: center;
   padding: 0.8rem 1.4rem;
-  border-radius: 999px;
+  border-radius: var(--radius-btn);
   font-weight: 600;
   text-decoration: none;
 }
 
 .btnPrimary {
-  background: var(--green-600);
+  background: var(--green-700);
   color: #fff;
 }
 
 .btnPrimary:hover {
-  background: var(--green-700);
+  background: var(--green-800);
 }
 
 .btnSecondary {
   background: var(--surface);
   color: var(--green-700);
-  border: 1px solid var(--green-300);
+  border: 1px solid var(--border-strong);
 }
 
 .btnSecondary:hover {

@@ -46,6 +46,7 @@
   --badge-amber-text: #7a5e1b;
 
   /* Vormgeving: kleinere radii + subtiele, neutrale schaduwen */
+  --radius-btn: 4px; /* hoekige, officiële knoppen */
   --radius-sm: 6px;
   --radius: 10px;
   --radius-lg: 14px;
@@ -133,6 +134,18 @@ img {
     var(--red-500) 50% 75%,
     var(--yellow-400) 75% 100%
   );
+}
+
+/* Respecteer de voorkeur voor minder beweging (toegankelijkheid) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Toegankelijk verbergen, maar leesbaar voor schermlezers */

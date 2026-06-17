@@ -313,8 +313,8 @@
   justify-content: center;
   width: 100%;
   padding: 0.85rem 1.4rem;
-  border-radius: var(--radius-sm);
-  background: var(--green-600);
+  border-radius: var(--radius-btn);
+  background: var(--green-700);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -322,7 +322,7 @@
 }
 
 .ctaBtn:hover {
-  background: var(--green-700);
+  background: var(--green-800);
 }
 
 .helpCard {

@@ -62,33 +62,29 @@
   align-items: center;
   justify-content: center;
   padding: 0.85rem 1.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-btn);
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.15s ease, transform 0.05s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .btnPrimary {
-  background: var(--green-600);
+  background: var(--green-700);
   color: #fff;
 }
 
 .btnPrimary:hover {
-  background: var(--green-700);
-}
-
-.btnPrimary:active {
-  transform: translateY(1px);
+  background: var(--green-800);
 }
 
 .btnSecondary {
   background: var(--surface);
   color: var(--green-700);
-  border: 1px solid var(--green-300);
+  border: 1px solid var(--border-strong);
 }
 
 .btnSecondary:hover {
-  background: var(--green-50);
+  background: var(--surface-soft);
   border-color: var(--green-400);
 }
 
@@ -222,12 +218,12 @@
   color: var(--green-900);
   font-weight: 600;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .quickLink:hover {
-  border-color: var(--green-400);
-  background: var(--surface-soft);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
 }
 
 .quickIcon {
