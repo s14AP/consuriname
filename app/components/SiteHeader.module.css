@@ -1,0 +1,213 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--header-height);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.crest {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--green-500), var(--green-700));
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.crestStar {
+  color: var(--yellow-400);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  color: var(--green-800);
+}
+
+.brandSub {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Desktopnavigatie */
+.navDesktop {
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.navLink {
+  padding: 0.5rem 0.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--foreground);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navLink:hover {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+.navLinkActive {
+  color: var(--green-700);
+  background: var(--green-100);
+}
+
+.cta {
+  margin-left: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: var(--green-600);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.cta:hover {
+  background: var(--green-700);
+}
+
+.cta:active {
+  transform: translateY(1px);
+}
+
+/* Hamburgerknop (mobiel) */
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.burger,
+.burger::before,
+.burger::after {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--green-800);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.burger {
+  position: relative;
+}
+
+.burger::before,
+.burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.burger::before {
+  top: -6px;
+}
+
+.burger::after {
+  top: 6px;
+}
+
+.burgerOpen {
+  background: transparent;
+}
+
+.burgerOpen::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.burgerOpen::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobiel uitklapmenu */
+.navMobile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.navMobileLink {
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.navMobileLink:hover {
+  background: var(--green-50);
+}
+
+.navMobileLinkActive {
+  background: var(--green-100);
+  color: var(--green-700);
+}
+
+.ctaMobile {
+  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--green-600);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ctaMobile:hover {
+  background: var(--green-700);
+}
+
+/* Vanaf tablet/desktop: toon de horizontale navigatie, verberg de hamburger */
+@media (min-width: 860px) {
+  .navDesktop {
+    display: flex;
+  }
+  .menuButton {
+    display: none;
+  }
+}

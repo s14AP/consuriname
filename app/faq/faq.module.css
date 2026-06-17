@@ -1,0 +1,140 @@
+.header {
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--border);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: var(--green-900);
+}
+
+.intro {
+  margin-top: 0.85rem;
+  max-width: 44rem;
+  color: #3f5147;
+  font-size: 1.05rem;
+}
+
+.body {
+  max-width: 52rem;
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.category {
+  margin-bottom: 2.25rem;
+}
+
+.categoryTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--green-800);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--green-100);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 1rem;
+  background: var(--surface);
+}
+
+.item summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--green-800);
+  padding: 0.65rem 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.item summary::-webkit-details-marker {
+  display: none;
+}
+
+.item summary::before {
+  content: "＋";
+  color: var(--green-500);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.item[open] summary::before {
+  content: "－";
+}
+
+.item p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 0 0 0.75rem 1.2rem;
+}
+
+.contactCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.75rem;
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius);
+}
+
+.contactCard h2 {
+  font-size: 1.2rem;
+  color: var(--green-900);
+}
+
+.contactCard p {
+  color: #3f5147;
+  margin-top: 0.2rem;
+}
+
+.contactBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-sm);
+  background: var(--green-600);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.contactBtn:hover {
+  background: var(--green-700);
+}

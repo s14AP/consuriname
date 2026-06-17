@@ -1,26 +1,149 @@
-@import "tailwindcss";
+/*
+  Globale stijlen + huisstijl Surinaams Consulaat (demo).
+  Kleuren geïnspireerd op de vlag van Suriname: groen (dominant), wit, rood, geel.
+  Groen straalt rust, betrouwbaarheid en officieel gezag uit.
+
+  Componenten gebruiken CSS Modules (*.module.css). De kleuren/maten hieronder
+  zijn CSS-variabelen, zodat je ze op één plek kunt aanpassen.
+*/
 
 :root {
+  /* Suriname-groen — hoofdkleur */
+  --green-50: #eef6f0;
+  --green-100: #d6ebda;
+  --green-200: #aed7b8;
+  --green-300: #79bd8a;
+  --green-400: #4ba066;
+  --green-500: #377e3f; /* vlaggroen */
+  --green-600: #2c6633;
+  --green-700: #234f29;
+  --green-800: #1b3d20;
+  --green-900: #14301a;
+
+  /* Suriname-rood — accent */
+  --red-50: #fdecec;
+  --red-500: #c8102e;
+  --red-600: #a90d27;
+
+  /* Suriname-geel — accent (ster) */
+  --yellow-300: #ffd54a;
+  --yellow-400: #f5c518;
+  --yellow-500: #e0b00c;
+
+  /* Neutralen / oppervlakken (rustig, officieel) */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1c2b22;
+  --muted: #5f6f66;
+  --surface: #ffffff;
+  --surface-soft: #f6f8f6;
+  --border: #e2e8e3;
+  --border-strong: #cfd8d1;
+
+  /* Gedempt accent voor labels/badges (i.p.v. fel geel) */
+  --badge-bg: #eef3ee;
+  --badge-text: #3a5240;
+  --badge-amber-bg: #f6efda;
+  --badge-amber-text: #7a5e1b;
+
+  /* Vormgeving: kleinere radii + subtiele, neutrale schaduwen */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(20, 35, 26, 0.05);
+  --shadow-md: 0 2px 8px rgba(20, 35, 26, 0.06);
+  --shadow-lg: 0 8px 24px rgba(20, 35, 26, 0.08);
+
+  --header-height: 4.25rem;
+  --topbar-height: 2.5rem;
+  --content-max: 75rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, Segoe UI, Roboto,
+    Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--green-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Herbruikbare layout-helper: gecentreerde inhoudsbreedte */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Vlagaccent-balk (groen / wit / rood / geel) als identiteitselement */
+.flagBar {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    var(--green-500) 0 25%,
+    #ffffff 25% 50%,
+    var(--red-500) 50% 75%,
+    var(--yellow-400) 75% 100%
+  );
+}
+
+/* Toegankelijk verbergen, maar leesbaar voor schermlezers */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

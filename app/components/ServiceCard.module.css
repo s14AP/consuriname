@@ -1,0 +1,90 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  height: 100%;
+}
+
+.card:hover {
+  border-color: var(--green-400);
+  box-shadow: var(--shadow-md);
+}
+
+.icon {
+  font-size: 1.8rem;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--green-50);
+}
+
+.category {
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green-600);
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--green-900);
+}
+
+.summary {
+  font-size: 0.94rem;
+  color: var(--muted);
+  flex: 1;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.metaItem {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: var(--badge-amber-bg);
+  color: var(--badge-amber-text);
+  border: 1px solid #e7dcbd;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--green-700);
+}
+
+.arrow {
+  transition: transform 0.15s ease;
+}
+
+.card:hover .arrow {
+  transform: translateX(4px);
+}

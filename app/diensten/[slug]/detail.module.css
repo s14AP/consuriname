@@ -1,0 +1,366 @@
+.header {
+  background: linear-gradient(180deg, var(--green-50) 0%, var(--surface) 100%);
+  border-bottom: 1px solid var(--border);
+  padding-top: 2rem;
+  padding-bottom: 2.25rem;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+
+.breadcrumb a {
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.headerMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.icon {
+  font-size: 2rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+
+.category {
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green-600);
+}
+
+.title {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--green-900);
+  margin-top: 0.15rem;
+}
+
+.summary {
+  margin-top: 0.5rem;
+  color: #3f5147;
+  font-size: 1.05rem;
+  max-width: 40rem;
+}
+
+.factGrid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.75rem 2rem;
+  margin: 1.5rem 0 0;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+}
+
+.fact dt {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.fact dd {
+  margin: 0;
+  font-weight: 700;
+  color: var(--green-800);
+}
+
+/* Inhoud */
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.intro {
+  font-size: 1.08rem;
+  color: #3f5147;
+  margin-bottom: 2rem;
+}
+
+.block {
+  margin-bottom: 2.5rem;
+}
+
+.blockTitle {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--green-900);
+  margin-bottom: 1.1rem;
+}
+
+/* Stappen */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.step {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+}
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: var(--green-600);
+  color: #fff;
+  font-weight: 700;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Verbindingslijn tussen stappen */
+.step:not(:last-child) .stepNum::after {
+  content: "";
+  position: absolute;
+  top: 2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% - 0.3rem);
+  background: var(--green-200);
+}
+
+.stepTitle {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--green-800);
+}
+
+.stepText {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+}
+
+/* Documenten */
+.docs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.doc {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.96rem;
+}
+
+.check {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--green-100);
+  color: var(--green-700);
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* FAQ */
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.faqItem {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+}
+
+.faqItem summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--green-800);
+  padding: 0.5rem 0;
+  list-style: none;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem summary::before {
+  content: "＋ ";
+  color: var(--green-500);
+  font-weight: 700;
+}
+
+.faqItem[open] summary::before {
+  content: "－ ";
+}
+
+.faqItem p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding-bottom: 0.6rem;
+}
+
+/* Zijbalk met formulier */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ctaCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+}
+
+.ctaTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--green-900);
+  margin-bottom: 0.5rem;
+}
+
+.ctaText {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.ctaFacts {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ctaFacts li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.ctaFacts li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ctaFacts span {
+  color: var(--muted);
+}
+
+.ctaFacts strong {
+  color: var(--green-800);
+  text-align: right;
+}
+
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.85rem 1.4rem;
+  border-radius: var(--radius-sm);
+  background: var(--green-600);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+
+.ctaBtn:hover {
+  background: var(--green-700);
+}
+
+.helpCard {
+  background: var(--green-800);
+  color: #e6f0e8;
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+
+.helpCard h3 {
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.helpCard p {
+  font-size: 0.92rem;
+  color: #b8cdbe;
+  margin-bottom: 0.8rem;
+}
+
+.helpLink {
+  font-weight: 600;
+  color: var(--yellow-300);
+  text-decoration: none;
+}
+
+.helpLink:hover {
+  text-decoration: underline;
+}
+
+/* Twee kolommen vanaf desktop; formulier blijft meescrollen */
+@media (min-width: 960px) {
+  .body {
+    grid-template-columns: 1.7fr 1fr;
+    align-items: start;
+  }
+  .sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + 1.5rem);
+  }
+}

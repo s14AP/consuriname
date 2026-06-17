@@ -1,0 +1,202 @@
+.header {
+  background: linear-gradient(180deg, var(--green-50) 0%, var(--surface) 100%);
+  border-bottom: 1px solid var(--border);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.title {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: var(--green-900);
+}
+
+.intro {
+  margin-top: 0.85rem;
+  max-width: 46rem;
+  color: #3f5147;
+  font-size: 1.05rem;
+}
+
+.body {
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.blockTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--green-900);
+  margin-bottom: 1rem;
+}
+
+.missionBlock {
+  max-width: 48rem;
+  margin-bottom: 3rem;
+}
+
+.paragraph {
+  color: #3f5147;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.tasksBlock {
+  margin-bottom: 3rem;
+}
+
+.taskGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+
+.taskCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.taskIcon {
+  font-size: 1.7rem;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--green-50);
+  margin-bottom: 0.6rem;
+}
+
+.taskCard h3 {
+  color: var(--green-800);
+  font-size: 1.08rem;
+  margin-bottom: 0.3rem;
+}
+
+.taskCard p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Cijfers */
+.factsBlock {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 2rem 1.5rem;
+  margin-bottom: 3rem;
+  background: var(--green-800);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #e6f0e8;
+}
+
+.factNumber {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--yellow-400);
+  line-height: 1.1;
+}
+
+.factLabel {
+  font-size: 0.85rem;
+  color: #b8cdbe;
+}
+
+/* CTA */
+.ctaBlock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 2rem;
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-lg);
+}
+
+.ctaBlock h2 {
+  font-size: 1.4rem;
+  color: var(--green-900);
+}
+
+.ctaBlock p {
+  color: #3f5147;
+  margin-top: 0.25rem;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.btnPrimary,
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btnPrimary {
+  background: var(--green-600);
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: var(--green-700);
+}
+
+.btnSecondary {
+  background: var(--surface);
+  color: var(--green-700);
+  border: 1px solid var(--green-300);
+}
+
+.btnSecondary:hover {
+  background: var(--green-100);
+}
+
+@media (min-width: 640px) {
+  .taskGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .taskGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
