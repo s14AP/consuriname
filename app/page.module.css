@@ -227,13 +227,10 @@
 }
 
 .quickIcon {
-  font-size: 1.4rem;
   width: 2.6rem;
   height: 2.6rem;
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-sm);
-  background: var(--green-100);
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 /* Kaartenraster */

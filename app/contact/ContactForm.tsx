@@ -23,7 +23,7 @@ export default function ContactForm() {
           Bedankt voor uw bericht. Wij reageren doorgaans binnen twee werkdagen.
         </p>
         <p className={styles.demoHint}>
-          Dit is een demo — er is niets daadwerkelijk verzonden.
+          Dit is een demo er is niets daadwerkelijk verzonden.
         </p>
         <button
           type="button"
@@ -40,7 +40,13 @@ export default function ContactForm() {
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.field}>
         <label htmlFor="c-naam">Naam</label>
-        <input id="c-naam" name="naam" type="text" required autoComplete="name" />
+        <input
+          id="c-naam"
+          name="naam"
+          type="text"
+          required
+          autoComplete="name"
+        />
       </div>
       <div className={styles.field}>
         <label htmlFor="c-email">E-mailadres</label>

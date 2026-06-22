@@ -125,9 +125,12 @@ export default function AfspraakWizard() {
                     checked={serviceSlug === s.slug}
                     onChange={() => setServiceSlug(s.slug)}
                   />
-                  <span className={styles.serviceIcon} aria-hidden="true">
-                    {s.icon}
-                  </span>
+                  <img
+                    className={styles.serviceIcon}
+                    src={s.icon}
+                    alt=""
+                    aria-hidden="true"
+                  />
                   <span>
                     <span className={styles.serviceName}>{s.title}</span>
                     <span className={styles.serviceMeta}>{s.summary}</span>

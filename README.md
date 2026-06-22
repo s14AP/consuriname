@@ -1,8 +1,8 @@
-# Consulaat van Suriname — demo-website
+# Consulaat van Suriname - demo-website
 
 Klikbare demo voor een nieuwe website van het Surinaams consulaat in Nederland.
 Doel van deze fase: de flow en het ontwerp tastbaar tonen aan de klant. Er is
-**geen backend** — alle data is hardcoded en formulieren/afspraken zijn gefaket.
+**geen backend** - alle data is hardcoded en formulieren/afspraken zijn gefaket.
 
 ## Tech
 

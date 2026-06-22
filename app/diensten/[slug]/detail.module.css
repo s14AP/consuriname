@@ -31,11 +31,10 @@
 }
 
 .icon {
-  font-size: 2rem;
   width: 3.6rem;
   height: 3.6rem;
-  display: grid;
-  place-items: center;
+  object-fit: contain;
+  padding: 0.45rem;
   border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--border);

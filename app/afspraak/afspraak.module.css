@@ -177,13 +177,9 @@
 }
 
 .serviceIcon {
-  font-size: 1.3rem;
   width: 2.4rem;
   height: 2.4rem;
-  display: grid;
-  place-items: center;
-  border-radius: var(--radius-sm);
-  background: var(--surface-soft);
+  object-fit: contain;
   flex-shrink: 0;
 }
 

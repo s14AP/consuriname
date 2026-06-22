@@ -4,10 +4,10 @@ import ServiceCard from "./components/ServiceCard";
 import styles from "./page.module.css";
 
 const quickLinks = [
-  { href: "/diensten/paspoort-aanvragen", label: "Paspoort", icon: "🛂" },
-  { href: "/diensten/visum-aanvragen", label: "Visum", icon: "✈️" },
-  { href: "/diensten/legalisatie-documenten", label: "Legalisatie", icon: "📑" },
-  { href: "/diensten/geboorteakte-uittreksel", label: "Burgerzaken", icon: "📋" },
+  { href: "/diensten/paspoort-aanvragen", label: "Paspoort", icon: "/passport.png" },
+  { href: "/diensten/visum-aanvragen", label: "Visum", icon: "/travel.png" },
+  { href: "/diensten/legalisatie-documenten", label: "Legalisatie", icon: "/stamp.png" },
+  { href: "/diensten/geboorteakte-uittreksel", label: "Burgerzaken", icon: "/document.png" },
 ];
 
 export default function Home() {
@@ -75,9 +75,12 @@ export default function Home() {
         <div className={styles.quickGrid}>
           {quickLinks.map((link) => (
             <Link key={link.href} href={link.href} className={styles.quickLink}>
-              <span className={styles.quickIcon} aria-hidden="true">
-                {link.icon}
-              </span>
+              <img
+                className={styles.quickIcon}
+                src={link.icon}
+                alt=""
+                aria-hidden="true"
+              />
               <span className={styles.quickLabel}>{link.label}</span>
             </Link>
           ))}

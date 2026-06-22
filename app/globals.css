@@ -8,7 +8,7 @@
 */
 
 :root {
-  /* Suriname-groen — hoofdkleur */
+  /* Suriname-groen - hoofdkleur */
   --green-50: #eef6f0;
   --green-100: #d6ebda;
   --green-200: #aed7b8;
@@ -20,12 +20,12 @@
   --green-800: #1b3d20;
   --green-900: #14301a;
 
-  /* Suriname-rood — accent */
+  /* Suriname-rood - accent */
   --red-50: #fdecec;
   --red-500: #c8102e;
   --red-600: #a90d27;
 
-  /* Suriname-geel — accent (ster) */
+  /* Suriname-geel - accent (ster) */
   --yellow-300: #ffd54a;
   --yellow-400: #f5c518;
   --yellow-500: #e0b00c;

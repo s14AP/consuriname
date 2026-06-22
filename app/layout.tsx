@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Consulaat van Suriname — Nederland",
+    default: "Consulaat van Suriname - Nederland",
     template: "%s · Consulaat van Suriname",
   },
   description:

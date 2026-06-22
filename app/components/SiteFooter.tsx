@@ -16,8 +16,8 @@ export default function SiteFooter() {
             <span className={styles.brandTitle}>Consulaat van Suriname</span>
           </div>
           <p className={styles.note}>
-            Officiële consulaire diensten voor Surinaamse burgers en bezoekers in
-            Nederland.
+            Officiële consulaire diensten voor Surinaamse burgers en bezoekers
+            in Nederland.
           </p>
         </div>
 
@@ -25,7 +25,9 @@ export default function SiteFooter() {
           <h3 className={styles.heading}>Diensten</h3>
           <ul className={styles.list}>
             <li>
-              <Link href="/diensten/paspoort-aanvragen">Paspoort aanvragen</Link>
+              <Link href="/diensten/paspoort-aanvragen">
+                Paspoort aanvragen
+              </Link>
             </li>
             <li>
               <Link href="/diensten/visum-aanvragen">Visum aanvragen</Link>
@@ -66,7 +68,7 @@ export default function SiteFooter() {
 
       <div className={styles.bottom}>
         <div className={`container ${styles.bottomInner}`}>
-          <span>© {year} Consulaat van Suriname — demo-website</span>
+          <span>© {year} Consulaat van Suriname demo-website</span>
           <span className={styles.demoTag}>Demo · geen officiële site</span>
         </div>
       </div>

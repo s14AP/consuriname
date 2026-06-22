@@ -16,7 +16,7 @@ export type Service = {
   summary: string;
   /** Categorie voor groepering in het overzicht */
   category: "Reizen & documenten" | "Burgerzaken" | "Legalisatie" | "Zakelijk";
-  /** Emoji-icoon als eenvoudige visuele markering (placeholder voor echt icoon) */
+  /** Pad naar de icoon-afbeelding in /public (bijv. "/passport.png") */
   icon: string;
   /** Indicatie van doorlooptijd */
   processingTime: string;
@@ -41,7 +41,7 @@ export const services: Service[] = [
     summary:
       "Vraag een nieuw Surinaams paspoort aan of verleng een verlopen reisdocument.",
     category: "Reizen & documenten",
-    icon: "🛂",
+    icon: "/passport.png",
     processingTime: "4 tot 6 weken",
     cost: "€ 75 (volwassene) / € 55 (kind)",
     appointmentRequired: true,
@@ -100,7 +100,7 @@ export const services: Service[] = [
     summary:
       "Een visum voor toeristisch, zakelijk of familiebezoek aan Suriname.",
     category: "Reizen & documenten",
-    icon: "✈️",
+    icon: "/travel.png",
     processingTime: "5 tot 10 werkdagen",
     cost: "Vanaf € 45, afhankelijk van het type visum",
     appointmentRequired: false,
@@ -146,10 +146,9 @@ export const services: Service[] = [
   {
     slug: "legalisatie-documenten",
     title: "Legalisatie van documenten",
-    summary:
-      "Laat officiële documenten legaliseren voor gebruik in Suriname.",
+    summary: "Laat officiële documenten legaliseren voor gebruik in Suriname.",
     category: "Legalisatie",
-    icon: "📑",
+    icon: "/stamp.png",
     processingTime: "3 tot 5 werkdagen",
     cost: "€ 25 per document",
     appointmentRequired: false,
@@ -185,8 +184,7 @@ export const services: Service[] = [
     faq: [
       {
         question: "Legaliseren jullie ook vertalingen?",
-        answer:
-          "Ja, mits de vertaling door een beëdigd vertaler is opgesteld.",
+        answer: "Ja, mits de vertaling door een beëdigd vertaler is opgesteld.",
       },
     ],
   },
@@ -196,7 +194,7 @@ export const services: Service[] = [
     summary:
       "Vraag een uittreksel of afschrift van een Surinaamse geboorteakte aan.",
     category: "Burgerzaken",
-    icon: "📋",
+    icon: "/document.png",
     processingTime: "2 tot 4 weken",
     cost: "€ 20 per uittreksel",
     appointmentRequired: false,
@@ -242,7 +240,7 @@ export const services: Service[] = [
     summary:
       "Een verklaring ter ondersteuning van het omwisselen van uw rijbewijs.",
     category: "Burgerzaken",
-    icon: "🚗",
+    icon: "/driver-license.png",
     processingTime: "3 tot 5 werkdagen",
     cost: "€ 30",
     appointmentRequired: false,
@@ -275,7 +273,7 @@ export const services: Service[] = [
     summary:
       "Ondersteuning bij certificaten van oorsprong en handelsdocumenten.",
     category: "Zakelijk",
-    icon: "🏷️",
+    icon: "/free-trade.png",
     processingTime: "5 werkdagen",
     cost: "Op aanvraag",
     appointmentRequired: false,

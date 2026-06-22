@@ -7,11 +7,14 @@ export default function ServiceCard({ service }: { service: Service }) {
     <Link
       href={`/diensten/${service.slug}`}
       className={styles.card}
-      aria-label={`${service.title} — meer informatie`}
+      aria-label={`${service.title} meer informatie`}
     >
-      <span className={styles.icon} aria-hidden="true">
-        {service.icon}
-      </span>
+      <img
+        className={styles.icon}
+        src={service.icon}
+        alt=""
+        aria-hidden="true"
+      />
       <span className={styles.category}>{service.category}</span>
       <h3 className={styles.title}>{service.title}</h3>
       <p className={styles.summary}>{service.summary}</p>

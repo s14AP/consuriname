@@ -49,9 +49,7 @@ export default async function ServiceDetailPage({
           </nav>
 
           <div className={styles.headerMain}>
-            <span className={styles.icon} aria-hidden="true">
-              {service.icon}
-            </span>
+            <img className={styles.icon} src={service.icon} alt="" aria-hidden="true" />
             <div>
               <span className={styles.category}>{service.category}</span>
               <h1 className={styles.title}>{service.title}</h1>
