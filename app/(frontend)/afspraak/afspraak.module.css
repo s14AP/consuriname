@@ -288,6 +288,15 @@
   color: var(--muted);
 }
 
+.error {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #e4b4b4;
+  border-radius: var(--radius-sm);
+  background: #fbeaea;
+  color: #8a2b2b;
+  font-size: 0.9rem;
+}
+
 /* Bevestiging */
 .confirm {
   align-items: flex-start;

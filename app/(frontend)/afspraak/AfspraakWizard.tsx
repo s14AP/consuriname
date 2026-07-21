@@ -2,27 +2,17 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState, type FormEvent } from "react";
-import { services } from "../lib/services";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./afspraak.module.css";
 
+export type DienstOptie = {
+  id: number;
+  naam: string;
+  slug: string;
+  doorlooptijd?: string | null;
+};
+
 const STEPS = ["Dienst", "Datum & tijd", "Uw gegevens", "Bevestiging"] as const;
-
-const TIME_SLOTS = [
-  "09:00",
-  "09:30",
-  "10:00",
-  "10:30",
-  "11:00",
-  "13:30",
-  "14:00",
-  "14:30",
-];
-
-function makeReference() {
-  const n = Math.floor(10000 + Math.random() * 89999);
-  return `SR-2026-${n}`;
-}
 
 function formatDate(value: string) {
   if (!value) return "";
@@ -35,32 +25,74 @@ function formatDate(value: string) {
   });
 }
 
-export default function AfspraakWizard() {
+export default function AfspraakWizard({ diensten }: { diensten: DienstOptie[] }) {
   const searchParams = useSearchParams();
   const preselected = searchParams.get("dienst") ?? "";
 
   const [step, setStep] = useState(0);
   const [serviceSlug, setServiceSlug] = useState(
-    services.some((s) => s.slug === preselected) ? preselected : ""
+    diensten.some((d) => d.slug === preselected) ? preselected : ""
   );
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [naam, setNaam] = useState("");
   const [email, setEmail] = useState("");
   const [telefoon, setTelefoon] = useState("");
-  const [reference] = useState(makeReference);
+
+  // Beschikbare sloten voor de gekozen dag (live uit de backend)
+  const [sloten, setSloten] = useState<string[]>([]);
+  const [dagOpen, setDagOpen] = useState<boolean | null>(null);
+  const [slotenLaden, setSlotenLaden] = useState(false);
+  const [herlaad, setHerlaad] = useState(0);
+
+  // Verzenden van de boeking
+  const [verzenden, setVerzenden] = useState(false);
+  const [fout, setFout] = useState<string | null>(null);
+  const [referentie, setReferentie] = useState("");
 
   const service = useMemo(
-    () => services.find((s) => s.slug === serviceSlug),
-    [serviceSlug]
+    () => diensten.find((d) => d.slug === serviceSlug),
+    [diensten, serviceSlug]
   );
 
-  // Minimale datum = morgen
+  // Minimale datum = morgen (het consulaat neemt geen boekingen voor vandaag aan)
   const minDate = useMemo(() => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
     return d.toISOString().split("T")[0];
   }, []);
+
+  // Haal de vrije sloten op zodra er een datum is (of na een herlaad-signaal)
+  useEffect(() => {
+    if (!date) {
+      setSloten([]);
+      setDagOpen(null);
+      return;
+    }
+    let geannuleerd = false;
+    setSlotenLaden(true);
+    fetch(`/api/beschikbaarheid?datum=${date}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (geannuleerd) return;
+        setDagOpen(Boolean(data.open));
+        const beschikbaar: string[] = Array.isArray(data.sloten) ? data.sloten : [];
+        setSloten(beschikbaar);
+        // Gekozen tijd wissen als die intussen niet meer vrij is
+        setTime((huidig) => (beschikbaar.includes(huidig) ? huidig : ""));
+      })
+      .catch(() => {
+        if (geannuleerd) return;
+        setDagOpen(false);
+        setSloten([]);
+      })
+      .finally(() => {
+        if (!geannuleerd) setSlotenLaden(false);
+      });
+    return () => {
+      geannuleerd = true;
+    };
+  }, [date, herlaad]);
 
   const canContinue =
     (step === 0 && !!serviceSlug) ||
@@ -74,9 +106,51 @@ export default function AfspraakWizard() {
     if (step > 0) setStep((s) => s - 1);
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (canContinue) next(); // naar bevestiging
+  async function verstuur() {
+    if (!service) return;
+    setVerzenden(true);
+    setFout(null);
+    try {
+      const res = await fetch("/api/afspraken", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          naam,
+          email,
+          telefoon: telefoon || undefined,
+          dienst: service.id,
+          datum: date,
+          tijdslot: time,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        const top = data?.errors?.[0];
+        const veldFout = top?.data?.errors?.[0];
+        const bericht: string =
+          veldFout?.message ?? top?.message ?? "Er ging iets mis. Probeer het opnieuw.";
+
+        // Slot net vergeven? Terug naar stap 2 (datum & tijd) met verse sloten.
+        if (veldFout?.path === "tijdslot") {
+          setFout(bericht);
+          setTime("");
+          setHerlaad((n) => n + 1);
+          setStep(1);
+        } else {
+          setFout(bericht);
+        }
+        return;
+      }
+
+      const data = await res.json();
+      setReferentie(data.doc.referentie);
+      setStep(3);
+    } catch {
+      setFout("Kon geen verbinding maken. Controleer uw internet en probeer het opnieuw.");
+    } finally {
+      setVerzenden(false);
+    }
   }
 
   return (
@@ -110,34 +184,39 @@ export default function AfspraakWizard() {
               Kies de dienst waarvoor u langs wilt komen op het consulaat in Den
               Haag.
             </p>
-            <div className={styles.serviceList} role="radiogroup" aria-label="Dienst">
-              {services.map((s) => (
-                <label
-                  key={s.slug}
-                  className={`${styles.serviceOption} ${
-                    serviceSlug === s.slug ? styles.serviceOptionActive : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="dienst"
-                    value={s.slug}
-                    checked={serviceSlug === s.slug}
-                    onChange={() => setServiceSlug(s.slug)}
-                  />
-                  <img
-                    className={styles.serviceIcon}
-                    src={s.icon}
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <span>
-                    <span className={styles.serviceName}>{s.title}</span>
-                    <span className={styles.serviceMeta}>{s.summary}</span>
-                  </span>
-                </label>
-              ))}
-            </div>
+            {diensten.length === 0 ? (
+              <p className={styles.hint}>
+                Er zijn op dit moment geen diensten beschikbaar om online te
+                boeken. Neem contact op met het consulaat.
+              </p>
+            ) : (
+              <div className={styles.serviceList} role="radiogroup" aria-label="Dienst">
+                {diensten.map((d) => (
+                  <label
+                    key={d.slug}
+                    className={`${styles.serviceOption} ${
+                      serviceSlug === d.slug ? styles.serviceOptionActive : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="dienst"
+                      value={d.slug}
+                      checked={serviceSlug === d.slug}
+                      onChange={() => setServiceSlug(d.slug)}
+                    />
+                    <span>
+                      <span className={styles.serviceName}>{d.naam}</span>
+                      {d.doorlooptijd && (
+                        <span className={styles.serviceMeta}>
+                          Doorlooptijd: {d.doorlooptijd}
+                        </span>
+                      )}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -146,8 +225,14 @@ export default function AfspraakWizard() {
           <div className={styles.stepBody}>
             <h2 className={styles.stepTitle}>Kies een datum en tijd</h2>
             <p className={styles.stepIntro}>
-              Selecteer een beschikbaar moment. (Demo: alle tijden zijn fictief.)
+              Selecteer een beschikbaar moment. Alleen vrije tijden worden
+              getoond.
             </p>
+            {fout && (
+              <p className={styles.error} role="alert">
+                {fout}
+              </p>
+            )}
             <div className={styles.field}>
               <label htmlFor="datum">Datum</label>
               <input
@@ -155,29 +240,42 @@ export default function AfspraakWizard() {
                 type="date"
                 min={minDate}
                 value={date}
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  setFout(null);
+                  setDate(e.target.value);
+                }}
               />
             </div>
             <fieldset className={styles.slots}>
               <legend>Beschikbare tijden</legend>
-              <div className={styles.slotGrid}>
-                {TIME_SLOTS.map((slot) => (
-                  <button
-                    key={slot}
-                    type="button"
-                    className={`${styles.slot} ${
-                      time === slot ? styles.slotActive : ""
-                    }`}
-                    aria-pressed={time === slot}
-                    onClick={() => setTime(slot)}
-                    disabled={!date}
-                  >
-                    {slot}
-                  </button>
-                ))}
-              </div>
-              {!date && (
+              {!date ? (
                 <p className={styles.hint}>Kies eerst een datum.</p>
+              ) : slotenLaden ? (
+                <p className={styles.hint}>Beschikbaarheid laden…</p>
+              ) : dagOpen === false ? (
+                <p className={styles.hint}>
+                  Het consulaat is op deze dag gesloten. Kies een andere datum.
+                </p>
+              ) : sloten.length === 0 ? (
+                <p className={styles.hint}>
+                  Alle tijden op deze dag zijn volgeboekt. Kies een andere datum.
+                </p>
+              ) : (
+                <div className={styles.slotGrid}>
+                  {sloten.map((slot) => (
+                    <button
+                      key={slot}
+                      type="button"
+                      className={`${styles.slot} ${
+                        time === slot ? styles.slotActive : ""
+                      }`}
+                      aria-pressed={time === slot}
+                      onClick={() => setTime(slot)}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
               )}
             </fieldset>
           </div>
@@ -185,11 +283,16 @@ export default function AfspraakWizard() {
 
         {/* Stap 3: gegevens */}
         {step === 2 && (
-          <form className={styles.stepBody} onSubmit={handleSubmit} noValidate>
+          <div className={styles.stepBody}>
             <h2 className={styles.stepTitle}>Uw gegevens</h2>
             <p className={styles.stepIntro}>
               Wij gebruiken deze gegevens om uw afspraak te bevestigen.
             </p>
+            {fout && (
+              <p className={styles.error} role="alert">
+                {fout}
+              </p>
+            )}
             <div className={styles.row}>
               <div className={styles.field}>
                 <label htmlFor="naam">Volledige naam</label>
@@ -215,7 +318,7 @@ export default function AfspraakWizard() {
               </div>
             </div>
             <div className={styles.field}>
-              <label htmlFor="telefoon">Telefoonnummer</label>
+              <label htmlFor="telefoon">Telefoonnummer (optioneel)</label>
               <input
                 id="telefoon"
                 type="tel"
@@ -225,8 +328,7 @@ export default function AfspraakWizard() {
                 onChange={(e) => setTelefoon(e.target.value)}
               />
             </div>
-            <button type="submit" className={styles.hiddenSubmit} aria-hidden="true" tabIndex={-1} />
-          </form>
+          </div>
         )}
 
         {/* Stap 4: bevestiging */}
@@ -244,11 +346,11 @@ export default function AfspraakWizard() {
             <dl className={styles.summary}>
               <div>
                 <dt>Referentienummer</dt>
-                <dd className={styles.reference}>{reference}</dd>
+                <dd className={styles.reference}>{referentie}</dd>
               </div>
               <div>
                 <dt>Dienst</dt>
-                <dd>{service?.title}</dd>
+                <dd>{service?.naam}</dd>
               </div>
               <div>
                 <dt>Datum &amp; tijd</dt>
@@ -264,8 +366,8 @@ export default function AfspraakWizard() {
             </dl>
 
             <p className={styles.demoNote}>
-              Demo: er is geen echte afspraak ingepland of opgeslagen. Bewaar uw
-              referentienummer om de status te volgen.
+              Bewaar uw referentienummer. Hiermee kunt u de status van uw
+              aanvraag volgen.
             </p>
             <div className={styles.confirmActions}>
               <Link href="/aanvraag-volgen" className={styles.btnPrimary}>
@@ -286,21 +388,32 @@ export default function AfspraakWizard() {
             type="button"
             className={styles.btnSecondary}
             onClick={back}
-            disabled={step === 0}
+            disabled={step === 0 || verzenden}
           >
             Vorige
           </button>
           <span className={styles.stepCount}>
             Stap {step + 1} van {STEPS.length - 1}
           </span>
-          <button
-            type="button"
-            className={styles.btnPrimary}
-            onClick={next}
-            disabled={!canContinue}
-          >
-            {step === 2 ? "Afspraak bevestigen" : "Volgende"}
-          </button>
+          {step === 2 ? (
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              onClick={verstuur}
+              disabled={!canContinue || verzenden}
+            >
+              {verzenden ? "Bezig…" : "Afspraak bevestigen"}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className={styles.btnPrimary}
+              onClick={next}
+              disabled={!canContinue}
+            >
+              Volgende
+            </button>
+          )}
         </div>
       )}
     </div>

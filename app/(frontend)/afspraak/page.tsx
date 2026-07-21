@@ -1,7 +1,9 @@
+import config from "@payload-config";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getPayload } from "payload";
 import { Suspense } from "react";
-import AfspraakWizard from "./AfspraakWizard";
+import AfspraakWizard, { type DienstOptie } from "./AfspraakWizard";
 import styles from "./afspraak.module.css";
 
 export const metadata: Metadata = {
@@ -10,7 +12,26 @@ export const metadata: Metadata = {
     "Maak in een paar stappen een afspraak op het consulaat van Suriname in Den Haag.",
 };
 
-export default function AfspraakPage() {
+// Diensten komen live uit het CMS; niet cachen.
+export const dynamic = "force-dynamic";
+
+export default async function AfspraakPage() {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "diensten",
+    where: { zichtbaar: { equals: true } },
+    sort: "naam",
+    limit: 100,
+    depth: 0,
+  });
+
+  const diensten: DienstOptie[] = docs.map((dienst) => ({
+    id: dienst.id,
+    naam: dienst.naam,
+    slug: dienst.slug,
+    doorlooptijd: dienst.doorlooptijd ?? null,
+  }));
+
   return (
     <div>
       <section className={styles.header}>
@@ -30,7 +51,7 @@ export default function AfspraakPage() {
 
       <div className={`container ${styles.body}`}>
         <Suspense fallback={<p className={styles.loading}>Bezig met laden…</p>}>
-          <AfspraakWizard />
+          <AfspraakWizard diensten={diensten} />
         </Suspense>
       </div>
     </div>

@@ -5,14 +5,7 @@ import type {
 } from "payload";
 import { ValidationError } from "payload";
 
-// Afspraken zijn dag-gebonden; alle datums worden bekeken door de bril van
-// de tijdzone van het consulaat, ongeacht waar de server of bezoeker staat.
-const KALENDER_TIJDZONE = "Europe/Amsterdam";
-
-// Kalenderdag (YYYY-MM-DD) van een tijdstip, in de consulaat-tijdzone.
-// ("sv-SE" is een trucje: de Zweedse notatie is exact YYYY-MM-DD.)
-const kalenderdag = (waarde: string | Date): string =>
-  new Date(waarde).toLocaleDateString("sv-SE", { timeZone: KALENDER_TIJDZONE });
+import { kalenderdag } from "../lib/kalenderdag";
 
 // Normaliseert de datum vóór validatie/opslag naar UTC-middernacht van de
 // bedoelde kalenderdag. Zo staan wizard-boekingen ("2026-07-20") en
