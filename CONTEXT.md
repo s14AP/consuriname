@@ -65,7 +65,7 @@ npm run generate:types   # payload-types.ts opnieuw genereren (na wijziging coll
 
 ## Eerste keer opstarten
 
-1. `.env` moet `PAYLOAD_SECRET` en `DATABASE_URI=file:./consulaat.db` bevatten (staat niet in git).
+1. Kopieer `.env.example` naar `.env` en vul `PAYLOAD_SECRET`, `DATABASE_URI` en `SEED_ADMIN_PASSWORD` in (`.env` staat niet in git). Zonder `PAYLOAD_SECRET` start de app niet.
 2. `npm run dev`, open `/admin`, maak de eerste gebruiker aan met rol **Admin**.
 3. `npm run seed` voor de diensten en standaard openingstijden (ma–vr, 09:00–14:30).
 

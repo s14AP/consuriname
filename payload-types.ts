@@ -211,6 +211,7 @@ export interface Afspraken {
    */
   referentie?: string | null;
   notities?: string | null;
+  slotSleutel?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -349,6 +350,7 @@ export interface AfsprakenSelect<T extends boolean = true> {
   status?: T;
   referentie?: T;
   notities?: T;
+  slotSleutel?: T;
   updatedAt?: T;
   createdAt?: T;
 }

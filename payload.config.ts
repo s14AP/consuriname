@@ -13,6 +13,13 @@ import { Beschikbaarheid } from "./globals/Beschikbaarheid";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+// Zonder secret zijn sessietokens niet veilig te ondertekenen: liever meteen
+// falen dan stil met een lege string draaien.
+const secret = process.env.PAYLOAD_SECRET;
+if (!secret) {
+  throw new Error("PAYLOAD_SECRET ontbreekt — zet deze in .env (zie .env.example).");
+}
+
 export default buildConfig({
   admin: {
     user: "gebruikers", // welke collection de inlog-accounts bevat
@@ -25,7 +32,7 @@ export default buildConfig({
     },
   }),
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },

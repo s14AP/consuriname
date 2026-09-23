@@ -128,11 +128,14 @@ export default function AfspraakWizard({ diensten }: { diensten: DienstOptie[] }
         const data = await res.json().catch(() => null);
         const top = data?.errors?.[0];
         const veldFout = top?.data?.errors?.[0];
-        const bericht: string =
-          veldFout?.message ?? top?.message ?? "Er ging iets mis. Probeer het opnieuw.";
+        // slotSleutel = de database weigerde een gelijktijdige boeking van hetzelfde slot
+        const slotBezet = veldFout?.path === "slotSleutel";
+        const bericht: string = slotBezet
+          ? "Dit tijdslot is zojuist geboekt. Kies een ander moment."
+          : veldFout?.message ?? top?.message ?? "Er ging iets mis. Probeer het opnieuw.";
 
         // Slot net vergeven? Terug naar stap 2 (datum & tijd) met verse sloten.
-        if (veldFout?.path === "tijdslot") {
+        if (veldFout?.path === "tijdslot" || slotBezet) {
           setFout(bericht);
           setTime("");
           setHerlaad((n) => n + 1);

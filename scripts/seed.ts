@@ -1,6 +1,8 @@
 /*
   Seed-script: vult de database met de diensten uit de oude statische lijst,
   standaard openingstijden en (indien nog leeg) een admin-gebruiker.
+  Voor die admin-gebruiker moet SEED_ADMIN_PASSWORD in .env staan
+  (optioneel SEED_ADMIN_EMAIL, standaard admin@consulaat.nl).
 
   Draaien met:  npm run seed
   Idempotent: bestaande diensten (op slug) worden bijgewerkt, niet gedupliceerd.
@@ -111,16 +113,23 @@ console.log("↻ openingstijden ingesteld (ma–vr, 09:00–14:30)");
 // 3. Admin-gebruiker alleen aanmaken als er nog geen gebruikers zijn
 const gebruikers = await payload.find({ collection: "gebruikers", limit: 1 });
 if (gebruikers.totalDocs === 0) {
+  // Inloggegevens komen uit .env, zodat er geen wachtwoord in de repo staat.
+  const email = process.env.SEED_ADMIN_EMAIL || "admin@consulaat.nl";
+  const password = process.env.SEED_ADMIN_PASSWORD;
+  if (!password) {
+    console.error("✗ SEED_ADMIN_PASSWORD ontbreekt in .env — admin-gebruiker niet aangemaakt.");
+    process.exit(1);
+  }
   await payload.create({
     collection: "gebruikers",
     data: {
-      email: "admin@consulaat.nl",
-      password: "WijzigDitWachtwoord!",
+      email,
+      password,
       naam: "Beheerder",
       rol: "admin",
     },
   });
-  console.log("+ admin-gebruiker aangemaakt: admin@consulaat.nl (wachtwoord wijzigen!)");
+  console.log(`+ admin-gebruiker aangemaakt: ${email}`);
 } else {
   console.log("• gebruiker(s) bestaan al — geen admin aangemaakt");
 }
